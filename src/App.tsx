@@ -1,17 +1,17 @@
-import { useState } from 'react';
-
-const demoTips = [
-  'Tap the mic and say “bbq hogfather 1200 baht ribs with Dasha”.',
-  'Use the text box if you prefer typing.',
-  'Preview will auto-detect amount, currency, and group guess.',
-];
+import { useEffect } from 'react';
+import { QuickAddCard } from './features/quick-add/QuickAddCard';
+import { useSettings } from './state/settings.store';
+import { useExpensesStore } from './state/expenses.store';
+import { LastSpendsList } from './features/overview/LastSpendsList';
 
 function App() {
-  const [tipIndex, setTipIndex] = useState(0);
+  // Initialize stores
+  useSettings(); // Initializes settings
+  const initializeExpenses = useExpensesStore((state) => state.initialize);
 
-  const handleNextTip = () => {
-    setTipIndex((current) => (current + 1) % demoTips.length);
-  };
+  useEffect(() => {
+    initializeExpenses();
+  }, [initializeExpenses]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-ink-900 via-ink-700 to-ink-900 text-ink-200">
@@ -26,26 +26,16 @@ function App() {
       </header>
 
       <main className="mx-auto max-w-4xl space-y-6 px-4 pb-12">
-        <section className="rounded-2xl bg-ink-700/80 p-6 shadow-xl shadow-ink-900/40 backdrop-blur">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <QuickAddCard />
+
+        <section className="rounded-2xl border border-white/10 bg-ink-700/70 p-5 shadow-lg shadow-ink-900/40">
+          <div className="mb-3 flex items-center justify-between">
             <div>
-              <h2 className="font-display text-2xl font-semibold text-white">Quick add</h2>
-              <p className="text-ink-200/80">
-                Voice and text input with live parsing into amount, currency, merchant, and group.
-              </p>
+              <p className="text-xs uppercase tracking-[0.2em] text-mint">Recent</p>
+              <h3 className="font-display text-xl font-semibold text-white">Last 5 spends</h3>
             </div>
-            <button
-              type="button"
-              onClick={handleNextTip}
-              className="rounded-full bg-coral px-4 py-2 text-sm font-semibold text-ink-900 transition hover:-translate-y-0.5 hover:bg-coral/90"
-            >
-              Next tip
-            </button>
           </div>
-          <div className="mt-4 rounded-xl border border-white/10 bg-ink-900/40 p-4">
-            <p className="font-semibold text-sunshine">Tip</p>
-            <p className="text-ink-200">{demoTips[tipIndex]}</p>
-          </div>
+          <LastSpendsList limit={5} />
         </section>
 
         <section className="grid gap-4 md:grid-cols-2">
