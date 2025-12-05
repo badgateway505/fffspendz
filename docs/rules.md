@@ -45,9 +45,10 @@ UI (components/pages) → State/Controllers (hooks/stores) → Services (API/IO)
 - Keep state isolated per feature; avoid global singletons unless project already uses them.
 - Expose small, typed APIs: `useFeature()` hooks, store slices, or controller classes. Return plain data + callbacks; avoid exposing raw service clients to UI.
 
----
-
-## 4) Services (API/IO)
+### 3.1 Store Initialization
+- Zustand stores should export initialization functions that load data from storage on app start.
+- Provide React hooks (e.g., `useExpenses`, `useSettings`) that call initialization in `useEffect` for automatic setup.
+- Keep initialization logic in the store; hooks are thin wrappers for component integration.
 
 - Sole location for side effects and external boundaries (HTTP, storage, auth, analytics, feature flags, 3rd-party SDKs).
 - No UI framework imports. Keep services deterministic and parameter-driven; avoid hidden globals.

@@ -341,9 +341,8 @@ If these commands are missing or different, inspect `package.json` or `README.md
 For any non-trivial change:
 
 1. Begin with a **Summary** and **Changed files** as shown above.
-2. Provide full contents of each new or modified file.
-3. Use appropriate language tags in code fences (`ts`, `tsx`, `js`, `md`, etc.).
-4. Keep narrative commentary short and focused; prioritize clear code and docs.
+2. Keep the response concise; do not dump full file contents unless explicitly requested.
+3. Keep narrative commentary short and focused; prioritize clear code and docs.
 
 If a task appears too large or risky to complete reliably in one step, propose a smaller decomposition, ask the human which subtask to start with, and proceed incrementally.
 

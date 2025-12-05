@@ -31,7 +31,7 @@ Voice-first spend tracker that lets me quickly add expenses, review recent histo
 - Text fallback: type a phrase and parse into draft; same preview/edit/save flow.
 - Main screen shows last 5 spends; tap to view details in history.
 - History page lists all spends latest-first; prep for future edit/delete.
-- Analytics card(s): quick totals and totals by group over recent period (e.g., last 7/30 days).
+- Analytics card(s): quick totals and totals by group over recent period (current: last 7-day window in main currency only).
 - Settings: set main currency (THB default), review preset groups.
 
 ## 5) Tech Stack
