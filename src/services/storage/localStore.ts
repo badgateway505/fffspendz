@@ -1,11 +1,12 @@
 import localforage from 'localforage';
 
-export type StorageKey = 'expenses' | 'categories' | 'settings';
+export type StorageKey = 'expenses' | 'categories' | 'settings' | 'debug';
 
 const STORAGE_KEYS: Record<StorageKey, string> = {
   expenses: 'expenses',
   categories: 'categories',
   settings: 'settings',
+  debug: 'debug',
 };
 
 const store = localforage.createInstance({

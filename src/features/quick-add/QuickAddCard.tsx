@@ -51,6 +51,7 @@ export function QuickAddCard() {
   };
 
   const handleStartSpeech = () => {
+    console.info('[quick-add] mic start requested');
     resetSpeech();
     setTextInput('');
     setTranscript('');
@@ -58,6 +59,7 @@ export function QuickAddCard() {
   };
 
   const handleStopSpeech = () => {
+    console.info('[quick-add] mic stop requested');
     stopSpeech();
   };
 

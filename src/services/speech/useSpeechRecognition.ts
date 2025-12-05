@@ -50,7 +50,6 @@ export function useSpeechRecognition(
     language = 'en-US',
     continuous = true,
     interimResults = true,
-    onTranscript,
   } = options;
 
   const [state, setState] = useState<SpeechRecognitionState>({
@@ -62,12 +61,22 @@ export function useSpeechRecognition(
 
   const recognitionRef = useRef<InstanceType<typeof window.SpeechRecognition> | null>(null);
   const isSupportedRef = useRef<boolean>(false);
+  const [isSupported, setIsSupported] = useState(false);
+  const statusRef = useRef<SpeechRecognitionStatus>('idle');
+  const hasInstanceRef = useRef(false);
+  const onTranscriptRef = useRef<UseSpeechRecognitionOptions['onTranscript']>(options.onTranscript);
+
+  useEffect(() => {
+    onTranscriptRef.current = options.onTranscript;
+  }, [options.onTranscript]);
 
   // Check support on mount
   useEffect(() => {
     const Recognition = getSpeechRecognition();
     isSupportedRef.current = Recognition !== null;
+    setIsSupported(isSupportedRef.current);
     if (!isSupportedRef.current) {
+      console.warn('[speech] Speech recognition not supported in this browser');
       setState((prev) => ({
         ...prev,
         status: 'unavailable',
@@ -76,17 +85,27 @@ export function useSpeechRecognition(
     }
   }, []);
 
+  useEffect(() => {
+    statusRef.current = state.status;
+  }, [state.status]);
+
   // Initialize recognition instance
   useEffect(() => {
     const Recognition = getSpeechRecognition();
-    if (!Recognition || !isSupportedRef.current) return;
+    if (!Recognition || !isSupportedRef.current) {
+      console.warn('[speech] Recognition not initialized: supported?', isSupportedRef.current, 'ctor?', !!Recognition);
+      return;
+    }
 
     const recognition = new Recognition();
     recognition.lang = language;
     recognition.continuous = continuous;
     recognition.interimResults = interimResults;
+    hasInstanceRef.current = true;
+    console.info('[speech] recognition instance created', { language, continuous, interimResults });
 
     recognition.onstart = () => {
+      console.info('[speech] recognition started');
       setState((prev) => ({
         ...prev,
         status: 'listening',
@@ -107,6 +126,10 @@ export function useSpeechRecognition(
         }
       }
 
+      if (final || interim) {
+        console.debug('[speech] onresult', { final, interim });
+      }
+
       setState((prev) => {
         const newTranscript = prev.transcript + final;
         const newState = {
@@ -115,8 +138,8 @@ export function useSpeechRecognition(
           interimTranscript: interim,
         };
         // Call optional callback with final transcript when available
-        if (final.trim() && onTranscript) {
-          onTranscript(newTranscript.trim());
+        if (final.trim() && onTranscriptRef.current) {
+          onTranscriptRef.current(newTranscript.trim());
         }
         return newState;
       });
@@ -134,9 +157,11 @@ export function useSpeechRecognition(
         errorMessage = 'Network error during recognition.';
       } else if (event.error === 'aborted') {
         // User or system aborted, not necessarily an error
+        console.info('[speech] recognition aborted');
         return;
       }
 
+      console.error('[speech] onerror', event.error);
       setState((prev) => ({
         ...prev,
         status: 'error',
@@ -145,6 +170,7 @@ export function useSpeechRecognition(
     };
 
     recognition.onend = () => {
+      console.info('[speech] recognition ended (last status)', statusRef.current);
       setState((prev) => {
         // Only change status if we're still in listening state (not manually stopped)
         if (prev.status === 'listening') {
@@ -169,10 +195,11 @@ export function useSpeechRecognition(
         recognitionRef.current = null;
       }
     };
-  }, [language, continuous, interimResults, onTranscript]);
+  }, [language, continuous, interimResults]);
 
   const start = useCallback(() => {
     if (!isSupportedRef.current || !recognitionRef.current) {
+      console.warn('[speech] start blocked; supported?', isSupportedRef.current, 'instance?', !!recognitionRef.current);
       setState((prev) => ({
         ...prev,
         status: 'unavailable',
@@ -182,13 +209,16 @@ export function useSpeechRecognition(
     }
 
     try {
+      console.info('[speech] start called');
       recognitionRef.current.start();
     } catch (error) {
       // Recognition might already be running
       if (error instanceof Error && error.name === 'InvalidStateError') {
         // Already started, ignore
+        console.warn('[speech] start ignored: already started');
         return;
       }
+      console.error('[speech] start failed', error);
       setState((prev) => ({
         ...prev,
         status: 'error',
@@ -198,8 +228,9 @@ export function useSpeechRecognition(
   }, []);
 
   const stop = useCallback(() => {
-    if (recognitionRef.current) {
+    if (recognitionRef.current && statusRef.current === 'listening') {
       try {
+        console.info('[speech] stop called');
         recognitionRef.current.stop();
         setState((prev) => ({
           ...prev,
@@ -208,11 +239,19 @@ export function useSpeechRecognition(
       } catch {
         // Ignore errors when stopping
       }
+    } else {
+      console.warn('[speech] stop ignored; status', statusRef.current, 'instance?', !!recognitionRef.current);
     }
   }, []);
 
   const reset = useCallback(() => {
-    stop();
+    console.info('[speech] reset called');
+    if (statusRef.current === 'listening') {
+      stop();
+    }
+    if (!hasInstanceRef.current) {
+      console.warn('[speech] reset with no instance available');
+    }
     setState({
       status: 'idle',
       transcript: '',
@@ -226,7 +265,6 @@ export function useSpeechRecognition(
     start,
     stop,
     reset,
-    isSupported: isSupportedRef.current,
+    isSupported,
   };
 }
-

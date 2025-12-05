@@ -3,6 +3,13 @@ import type { ParsedSpend, Currency, CategoryKey } from '../../domain/expense.ty
 // HELPERS:
 
 /**
+ * Escapes special regex characters in a string so it can be safely used in a RegExp.
+ */
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
  * Extracts amount from text, looking for numbers with optional currency indicators.
  * Returns the first significant number found (typically the amount).
  */
@@ -147,7 +154,8 @@ function extractNote(text: string, amount: number | undefined, merchant: string 
   
   // Remove amount if found
   if (amount !== undefined) {
-    note = note.replace(new RegExp(`\\b${amount}\\b`, 'g'), '').trim();
+    const escapedAmount = escapeRegex(amount.toString());
+    note = note.replace(new RegExp(`\\b${escapedAmount}\\b`, 'g'), '').trim();
   }
   
   // Remove currency words
@@ -157,7 +165,8 @@ function extractNote(text: string, amount: number | undefined, merchant: string 
   if (merchant) {
     const merchantWords = merchant.split(/\s+/);
     for (const word of merchantWords) {
-      note = note.replace(new RegExp(`\\b${word}\\b`, 'gi'), '').trim();
+      const escapedWord = escapeRegex(word);
+      note = note.replace(new RegExp(`\\b${escapedWord}\\b`, 'gi'), '').trim();
     }
   }
   

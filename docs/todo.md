@@ -12,22 +12,22 @@
 4) Speech recognition ✅
 - Implement Web Speech API hook/controller for live transcripts and status.
 
-5) Parsing
+5) Parsing ✅
 - Implement heuristic parser to extract amount, currency (THB), merchant/note, and group guess from free text.
 
-6) Quick add UI
+6) Quick add UI ✅
 - Build quick add card with voice button and text fallback input; wire to speech/transcript state.
 
-7) Draft preview
+7) Draft preview ✅
 - Show editable preview card (amount, currency, merchant/note, group) with save and cancel actions.
 
-8) Save flow
+8) Save flow ✅
 - Persist new expense to storage/state; apply defaults (THB, group presets).
 
-9) Last 5 spends
+9) Last 5 spends ✅
 - Render latest 5 expenses on main screen.
 
-10) History page
+10) History page ✅
 - Build history list (latest-first) page and navigation from main screen.
 
 11) Analytics
