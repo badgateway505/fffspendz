@@ -192,21 +192,6 @@ When the user writes `/task N` or “proceed with task N”:
    - path/to/file2.ext
    - docs/component-map.md (updated, if applicable)
 ````
-
-Then, for each new or modified file, show the **full file content** in a fenced code block:
-
-```ts
-// path/to/file1.ts
-...
-```
-
-```md
-<!-- docs/component-map.md -->
-...
-```
-
-Avoid partial snippets unless explicitly requested.
-
 If the task is ambiguous or seems to conflict with `docs/specs.md` or `docs/rules.md`, ask the human for clarification before implementing.
 
 ---
