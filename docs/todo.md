@@ -6,10 +6,10 @@
 2) Storage layer ✅
 - Add IndexedDB/localForage-style helper for JSON persistence and hydration.
 
-3) Domain models
+3) Domain models ✅
 - Define expense, category, settings types and parsing result types.
 
-4) Speech recognition
+4) Speech recognition ✅
 - Implement Web Speech API hook/controller for live transcripts and status.
 
 5) Parsing

@@ -54,6 +54,11 @@ UI (components/pages) → State/Controllers (hooks/stores) → Services (API/IO)
 - Input/output must be typed; prefer thin DTO mappers to decouple transport from domain models.
 - Handle retries/backoff/timeouts where appropriate; surface structured errors to state layer.
 
+### 4.1 React Hooks in Services
+- Services may export React hooks when wrapping browser APIs or external SDKs that require React lifecycle management (e.g., `useSpeechRecognition`, `useGeolocation`).
+- These hooks are still services (external boundaries) but use React hooks for state management.
+- Prefer pure functions/classes when possible; use hooks only when necessary for browser API integration.
+
 ---
 
 ## 5) Domain Models & Utilities

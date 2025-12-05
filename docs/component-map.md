@@ -1,7 +1,9 @@
 # Component Map: Smart Spends Web App (MVP)
 
+> **Note**: This map includes both implemented components and planned components for MVP. Components marked with ✅ are implemented; others are planned.
+
 ## App Shell
-- src/app/App.tsx – Root layout, routes, global providers.
+- src/App.tsx ✅ – Root layout, routes, global providers.
 - src/app/routes.tsx – Route definitions (main, history, settings).
 - src/components/NavBar/MobileNavBar.tsx – Mobile-first nav.
 
@@ -27,12 +29,13 @@
 - src/state/draft.store.ts – Current draft from speech/text, edit/save/cancel actions.
 
 ## Services
-- src/services/storage/localStore.ts – IndexedDB/localForage-style helper for JSON persistence.
-- src/services/speech/useSpeechRecognition.ts – Web Speech API hook for live transcripts/status.
-- src/services/parsing/parseSpend.ts – Heuristic parser for amount, currency, merchant/note, group guess.
+- src/services/storage/localStore.ts ✅ – IndexedDB/localForage-style helper for JSON persistence.
+- src/services/speech/useSpeechRecognition.ts ✅ – Web Speech API hook for live transcripts/status. Exports `useSpeechRecognition` hook with start/stop/reset controls and state (status, transcript, error).
+- src/services/parsing/parseSpend.ts ✅ – Heuristic parser for amount, currency, merchant/note, group guess. Exports `parseSpend()` function that extracts expense data from free-form text.
 
 ## Domain & Utilities
-- src/domain/expense.types.ts – Expense, category, settings, parser result types.
+- src/domain/expense.types.ts ✅ – Expense, category, settings, parser result types.
+- src/vite-env.d.ts ✅ – Global TypeScript declarations (Web Speech API types, etc.).
 - src/utils/formatters.ts – Currency/date/amount formatting helpers.
 
 ## Shared UI
