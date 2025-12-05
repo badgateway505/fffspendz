@@ -1,9 +1,9 @@
 # MVP Tasks
 
-1) Project setup
+1) Project setup ✅
 - Scaffold React + TypeScript + Vite with TailwindCSS and Zustand.
 
-2) Storage layer
+2) Storage layer ✅
 - Add IndexedDB/localForage-style helper for JSON persistence and hydration.
 
 3) Domain models
