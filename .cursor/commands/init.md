@@ -1,0 +1,1 @@
+read /init command from docs/AGENT.md

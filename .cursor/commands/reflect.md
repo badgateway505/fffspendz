@@ -1,0 +1,1 @@
+read /reflect command from docs/AGENT.md

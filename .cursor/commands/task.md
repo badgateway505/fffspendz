@@ -1,0 +1,1 @@
+read /task command from docs/AGENT.md
