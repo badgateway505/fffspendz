@@ -20,7 +20,7 @@
 - src/features/history/ExpenseItem.tsx – Row/item component (prep for edit/delete later).
 
 ## Settings Page
-- src/features/settings/SettingsPage.tsx – Main currency, preset groups management.
+- src/features/settings/SettingsPage.tsx ✅ – Main currency, preset groups management.
 
 ## State & Controllers
 - src/state/expenses.store.ts ✅ – Expenses store (Zustand) with add/list utilities. Persists to IndexedDB, applies defaults (THB currency), converts categoryKey to categoryId.

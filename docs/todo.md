@@ -33,7 +33,7 @@
 11) Analytics ✅
 - Add lightweight analytics summary (totals and totals by group over recent window).
 
-12) Settings page
+12) Settings page ✅
 - Manage main currency (THB default) and preset groups (food/fun/bills).
 
 13) Responsive & motion

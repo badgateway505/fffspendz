@@ -5,12 +5,13 @@ import { useExpensesStore } from './state/expenses.store';
 import { LastSpendsList } from './features/overview/LastSpendsList';
 import { AnalyticsSummary } from './features/analytics/AnalyticsSummary';
 import { HistoryPage } from './features/history/HistoryPage';
+import { SettingsPage } from './features/settings/SettingsPage';
 
 function App() {
   // Initialize stores
   useSettings(); // Initializes settings
   const initializeExpenses = useExpensesStore((state) => state.initialize);
-  const [view, setView] = useState<'home' | 'history'>('home');
+  const [view, setView] = useState<'home' | 'history' | 'settings'>('home');
 
   useEffect(() => {
     initializeExpenses();
@@ -46,11 +47,22 @@ function App() {
           >
             History
           </button>
+          <button
+            type="button"
+            onClick={() => setView('settings')}
+            className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+              view === 'settings'
+                ? 'bg-ink-200 text-ink-900 shadow-lg shadow-ink-200/30'
+                : 'bg-ink-700 text-ink-200 hover:bg-ink-600'
+            }`}
+          >
+            Settings
+          </button>
         </div>
       </header>
 
       <main className="mx-auto max-w-4xl space-y-6 px-4 pb-12">
-        {view === 'home' ? (
+        {view === 'home' && (
           <>
             <QuickAddCard />
 
@@ -89,7 +101,8 @@ function App() {
               </p>
             </section>
           </>
-        ) : (
+        )}
+        {view === 'history' && (
           <section className="rounded-2xl border border-white/10 bg-ink-700/70 p-6 shadow-lg shadow-ink-900/40">
             <div className="mb-4 flex items-center justify-between">
               <div>
@@ -105,6 +118,25 @@ function App() {
               </button>
             </div>
             <HistoryPage />
+          </section>
+        )}
+
+        {view === 'settings' && (
+          <section className="rounded-2xl border border-white/10 bg-ink-700/70 p-6 shadow-lg shadow-ink-900/40">
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-mint">Settings</p>
+                <h3 className="font-display text-2xl font-semibold text-white">Preferences</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setView('home')}
+                className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-ink-200 transition hover:border-white/30 hover:bg-ink-900/40"
+              >
+                Back to main
+              </button>
+            </div>
+            <SettingsPage />
           </section>
         )}
       </main>
