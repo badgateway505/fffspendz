@@ -3,6 +3,7 @@ import { QuickAddCard } from './features/quick-add/QuickAddCard';
 import { useSettings } from './state/settings.store';
 import { useExpensesStore } from './state/expenses.store';
 import { LastSpendsList } from './features/overview/LastSpendsList';
+import { AnalyticsSummary } from './features/analytics/AnalyticsSummary';
 import { HistoryPage } from './features/history/HistoryPage';
 
 function App() {
@@ -76,8 +77,7 @@ function App() {
                 <p className="text-ink-200/80">All spends, newest first. Edit/delete planned for beta.</p>
               </div>
               <div className="rounded-2xl border border-white/5 bg-ink-700/80 p-5 shadow-lg shadow-ink-900/40">
-                <h3 className="font-display text-xl text-white">Analytics</h3>
-                <p className="text-ink-200/80">Totals and by-group snapshots. Future charts and filters.</p>
+                <AnalyticsSummary />
               </div>
             </section>
 

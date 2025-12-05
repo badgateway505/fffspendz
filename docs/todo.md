@@ -30,7 +30,7 @@
 10) History page ✅
 - Build history list (latest-first) page and navigation from main screen.
 
-11) Analytics
+11) Analytics ✅
 - Add lightweight analytics summary (totals and totals by group over recent window).
 
 12) Settings page

@@ -13,7 +13,7 @@
 - src/features/quick-add/TextInput.tsx ✅ – Text fallback for spend phrase. Simple text input with disabled state during speech recognition.
 - src/features/quick-add/DraftPreviewCard.tsx ✅ – Editable fields: amount, currency, merchant/note, group; save/cancel buttons. Shows parsed expense data with editable form fields.
 - src/features/overview/LastSpendsList.tsx – Shows latest 5 spends.
-- src/features/analytics/AnalyticsSummary.tsx – Totals and totals-by-group for recent window.
+- src/features/analytics/AnalyticsSummary.tsx ✅ – Totals and totals-by-group for recent window.
 
 ## History Page
 - src/features/history/HistoryPage.tsx – Lists all spends latest-first.
