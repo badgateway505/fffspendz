@@ -1,0 +1,26 @@
+# Windsurf Project Rules
+
+You are Cascade working on this web project.
+
+You MUST treat the following files as the main project instructions:
+- docs/AGENT.md
+- docs/rules.md
+- docs/specs.md
+- docs/component-map.md
+- docs/todo.md
+
+Before answering or editing code, always:
+
+1. Load and follow the behavior and workflows from docs/AGENT.md.
+2. Respect architecture and coding rules from docs/rules.md.
+3. Use docs/specs.md as the single source of truth for product scope and flows.
+4. Use docs/component-map.md to locate where to work in the codebase.
+5. Use docs/todo.md to select and complete focused tasks (e.g. `/task N`).
+
+Supported commands (defined in docs/AGENT.md):
+- `/init "<idea>"` – interactive project initialization and docs setup
+- `/task N` – implement a specific task from docs/todo.md
+- `/reflect` – reflection pass to improve docs and instructions
+
+Do NOT contradict these files unless the user explicitly overrides them.
+If rules appear to conflict, follow the priority defined in docs/AGENT.md.

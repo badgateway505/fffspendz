@@ -1,0 +1,103 @@
+# Cursor Project Rules
+
+Cursor MUST treat the following files as the primary project instructions:
+- docs/AGENT.md
+- docs/rules.md
+- docs/specs.md
+- docs/component-map.md
+- docs/todo.md
+
+These files define how the project is structured, how tasks are executed, and how the agent must behave.  
+They override default Cursor behavior unless the user explicitly states otherwise.
+
+------------------------------------------------------------
+## ALWAYS DO THE FOLLOWING BEFORE ANSWERING OR MODIFYING CODE
+------------------------------------------------------------
+
+1. Load and obey the behavioral rules and workflows defined in:
+   - docs/AGENT.md
+
+2. Respect architecture, layering, naming, file-organization, and code-style rules from:
+   - docs/rules.md
+
+3. Treat docs/specs.md as the **single canonical specification**:
+   - Use it to understand product scope, MVP, flows, constraints, and tech stack.
+   - Keep it consistent with the code when performing `/task` or `/reflect`.
+
+4. Use docs/component-map.md to:
+   - Identify where components, services, hooks, and utilities live.
+   - Determine correct file locations and naming conventions.
+   - Update it whenever new components/modules are created or moved.
+
+5. Use docs/todo.md as the source of truth for tasks:
+   - When the user says “/task N”, locate task N exactly.
+   - Execute only that task.
+   - Keep changes minimal, focused, and consistent with the task description.
+
+------------------------------------------------------------
+## SUPPORTED COMMANDS (DEFINED IN docs/AGENT.md)
+------------------------------------------------------------
+
+Cursor must follow these commands exactly as described in docs/AGENT.md:
+
+### `/init "<idea>"`
+Interactive initialization:
+- Ask clarifying questions (Discovery phase)
+- Generate or update specs.md
+- Create todo.md tasks
+- Populate initial component-map.md
+- Do NOT write production code at this stage
+
+### `/task N`
+Implement task N from docs/todo.md:
+- Follow architecture rules strictly
+- Modify only what the task requires
+- Update component-map.md if new components appear
+- Update specs.md if feature scope changed
+- Output full file contents for changed files
+
+### `/reflect`
+Reflection cycle:
+- Analyze recent interactions
+- Identify inconsistencies, outdated docs, spec drift, missing components
+- Suggest improvements
+- Apply only after user approval
+
+Cursor MUST NOT auto-run reflection; instead suggest it when appropriate (after ~5 tasks, large changes, or doc drift).
+
+------------------------------------------------------------
+## CONFLICT RESOLUTION PRIORITY
+------------------------------------------------------------
+
+If instructions ever conflict, use the following strict priority:
+
+1. docs/rules.md
+2. docs/AGENT.md
+3. docs/specs.md
+4. docs/component-map.md
+5. docs/todo.md
+6. User’s latest direct request (unless it violates 1–2)
+
+If still unclear → ASK the user instead of guessing.
+
+------------------------------------------------------------
+## GENERAL RULES FOR CURSOR
+------------------------------------------------------------
+
+- Do NOT modify project config, build systems, or dependencies unless explicitly requested.
+- Do NOT introduce new frameworks, architecture layers, or libraries without approval.
+- Do NOT apply large refactors when performing a small task.
+- Do NOT ignore or partially follow AGENT.md or rules.md.
+
+- ALWAYS provide:
+  - summary
+  - list of changed files
+  - full updated file contents (unless user asks otherwise)
+
+- ALWAYS maintain documentation consistency (especially specs.md and component-map.md).
+
+- ALWAYS prefer clarity over cleverness.
+
+------------------------------------------------------------
+## END OF RULES
+------------------------------------------------------------
